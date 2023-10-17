@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My Django Web App</title>
+    <style>
+        /* Add custom CSS to style the Sign Out button */
+        .signout-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
 </head>
+
 <body>
     <h1>{{ message }}</h1>
-    <button><a href="signout">Signout</a></button>
+    <a href="{% url 'signout' %}" class="signout-button">Sign Out</a>
+    <h2>Your To-Do List:</h2>
+    <ul>
+        {% for item in todo_items %}
+        <li class="{% if item.completed %}completed{% endif %}">
+            {{ item.title }}
+            {% if not item.completed %}
+            <a href="{% url 'complete_todo_item' item.id %}">Complete</a>
+            {% endif %}
+            <a href="{% url 'delete_todo_item' item.id %}">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'add_todo_item' %}">Add New Item</a>
+
 </body>
+
 </html>

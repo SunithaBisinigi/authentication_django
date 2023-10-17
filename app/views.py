@@ -10,8 +10,11 @@ from .models import ToDoItem #Todo list model importing........
 
 @login_required
 def home(request):
+    user = request.user  # Get the logged-in user
+    todo_items = ToDoItem.objects.all()  # Fetch to-do list items
     context = {
-        'message': 'Hello, Django! welcome to home page',
+        'message': f'Hello, {user.username}! Welcome to the home page',
+        'todo_items': todo_items,  # Pass the to-do list items to the template
     }
     return render(request, 'home.html', context)
 def mem(request):

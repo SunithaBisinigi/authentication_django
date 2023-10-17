@@ -4,10 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
+    <style>
+         .signin-button {
+            position: fixed;
+            top: 10px;
+            right: 100px;
+        }
+        .signup-button {
+            position: fixed;
+            top: 10px;
+            right: 190px;
+        }
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 <body>
-    <button><a href="signin">Signin</a></button>
-    <button><a href="signup">Signup</a></button>
+    <h1>Welcome Django project...</h1>
+    <a href="{% url 'signin' %}" class="signin-button">SignIn</a>
+    <a href="{% url 'signup' %}" class="signup-button">SignUp</a>
     <p>Django is a back-end server side web framework.
         Django is free, open source and written in Python.
         Django makes it easier to build web pages using Python.
