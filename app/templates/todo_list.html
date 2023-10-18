@@ -1,26 +1,42 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>To-Do List</title>
+    <link rel="stylesheet" href="{% static 'todo.js' %}">
     <style>
         .completed {
             text-decoration: line-through;
+        }
+        .edit-input {
+            display: none;
         }
     </style>
 </head>
 <body>
     <h1>To-Do List</h1>
-    <ul>
-        {% for item in todo_items %}
-            <li class="{% if item.completed %}completed{% endif %}">
-                {{ item.title }}
-                {% if not item.completed %}
-                    <a href="{% url 'complete_todo_item' item.id %}">Complete</a>
-                {% endif %}
-                <a href="{% url 'delete_todo_item' item.id %}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_todo_item' %}">Add New Item</a>
+
+    <div>
+        <input type="text" id="new-item-input" placeholder="Add New Item" required>
+        <button id="add-item-button">Add</button>
+    </div>
+
+    <div id="todo-list">
+        <ul>
+            {% for item in todo_items %}
+                <li class="{% if item.completed %}completed{% endif %}">
+                    <span class="item-title">{{ item.title }}</span>
+                    <button class="edit-button">Edit</button>
+                    <button class="delete-button">Delete</button>
+                    <input class="edit-input" type="text" value="{{ item.title }}">
+                    <button class="save-button" style="display: none;">Save</button>
+                    <button class = "cancel-button" style="display: none;">Cancel</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="{% static 'todo.js' %}"></script>
+
+
 </body>
 </html>

@@ -1,12 +1,19 @@
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .models import UserInfo
 from django.contrib.auth.decorators import login_required
 from .models import ToDoItem #Todo list model importing........
+
+# Other views here...
+
+def delete_todo_item(request, item_id):
+    item = get_object_or_404(ToDoItem, pk=item_id)
+    item.delete()
+    return redirect('todo_list')
 
 @login_required
 def home(request):
@@ -118,3 +125,16 @@ def delete_todo_item(request, item_id):
     item = ToDoItem.objects.get(pk=item_id)
     item.delete()
     return redirect('todo_list')
+
+
+
+def edit_todo_item(request, item_id):
+    item = get_object_or_404(ToDoItem, pk=item_id)
+    
+    if request.method == 'POST':
+        new_title = request.POST['new_title']
+        item.title = new_title
+        item.save()
+        return redirect('todo_list')
+    
+    return render(request, 'edit_todo_item.html', {'item': item})
